@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Json try</string>
+    <string name="title_activity_main3">Main3Activity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Search</string>
+    <string name="title_notifications">About</string>
+</resources>
