@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment {
 //        textView.setText("Aqeel0");
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
-        String url ="https://pixabay.com/api/?key=11352394-967dbfe8727b610ee5d635714&orientation=vertical&editors_choice=true&image_type=photo&pretty=true&order=latest&per_page=20";
+        String url ="https://pixabay.com/api/?key=11352394-967dbfe8727b610ee5d635714&orientation=vertical&editors_choice=true&image_type=photo&pretty=true&order=latest&per_page=3";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -69,7 +69,7 @@ public class HomeFragment extends Fragment {
 
                         Wallpaper w = new Wallpaper(nUrl, hUrl);
                         wList.add(w);
-                        Toast.makeText(getContext(), "inner", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getContext(), "inner", Toast.LENGTH_LONG).show();
                         fun();
 
                     }

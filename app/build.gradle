@@ -42,4 +42,7 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:2.0.0-alpha1"
 
     implementation 'com.google.android.material:material:1.0.0'
+
+    implementation 'br.com.mauker.materialsearchview:materialsearchview:1.2.3'
+
 }
