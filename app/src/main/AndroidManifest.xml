@@ -11,17 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-    <provider
-        android:name="br.com.mauker.materialsearchview.db.HistoryProvider"
-        android:authorities="br.com.mauker.materialsearchview.searchhistorydatabase"
-        android:exported="false"
-        android:protectionLevel="signature"
-        android:syncable="true"/>
 
         <activity android:name=".MainActivity">
 
         </activity>
-        <activity android:name=".Main2Activity" />
+
         <activity
             android:name=".Main3Activity"
             android:label="@string/title_activity_main3">

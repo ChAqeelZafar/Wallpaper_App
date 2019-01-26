@@ -29,6 +29,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,12 +37,12 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView1;
     List<Wallpaper> wList = new ArrayList<>();
     TextView textView;
+    String url;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerView1 = view.findViewById(R.id.home_recycler_recycler);
 
 
 
@@ -51,11 +52,22 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.home_fragment, container, false);
-//        textView = v.findViewById(R.id.home_text);
-//        textView.setText("Aqeel0");
+
+
+        url ="https://pixabay.com/api/?key=11352394-967dbfe8727b610ee5d635714&orientation=vertical&editors_choice=true&image_type=photo&pretty=true&order=latest&per_page=10";
+
+        Bundle bundle = getArguments();
+        if(bundle!=null) {
+            String cat = getArguments().getString("category");
+            url = url + "&category="+ cat;
+
+        }
+
+
+
+        recyclerView1 = v.findViewById(R.id.home_recycler_recycler);
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
-        String url ="https://pixabay.com/api/?key=11352394-967dbfe8727b610ee5d635714&orientation=vertical&editors_choice=true&image_type=photo&pretty=true&order=latest&per_page=3";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -64,13 +76,13 @@ public class HomeFragment extends Fragment {
                 try {
                     JSONArray jsonArray = response.getJSONArray("hits");
                     for(int i=0; i <jsonArray.length(); i++){
-                        String nUrl = jsonArray.getJSONObject(i).getString("webformatURL");
+                        String nUrl = jsonArray.getJSONObject(i).getString("previewURL");
                         String hUrl = jsonArray.getJSONObject(i).getString("largeImageURL");
 
                         Wallpaper w = new Wallpaper(nUrl, hUrl);
                         wList.add(w);
                         //Toast.makeText(getContext(), "inner", Toast.LENGTH_LONG).show();
-                        fun();
+                        loadrecycler();
 
                     }
 
@@ -91,16 +103,12 @@ public class HomeFragment extends Fragment {
         });
 
         queue.add(jsonObjectRequest);
-        //Toast.makeText(MainActivity.this, "size:" + wList.size(), Toast.LENGTH_SHORT).show();
 
-
-        //return super.onCreateView(inflater, container, savedInstanceState);
-
-        return inflater.inflate(R.layout.home_fragment, null);
+        return v;
 
 
     }
-    void fun(){
+    void loadrecycler(){
         recyclerView1.setAdapter(new WallpaperAdapter(wList,getContext()));
         recyclerView1.setLayoutManager(new GridLayoutManager(getContext(),3));
     }

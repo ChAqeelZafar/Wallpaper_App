@@ -33,7 +33,7 @@ public class Main3Activity extends AppCompatActivity implements BottomNavigation
 
     private boolean loadFragment(Fragment fragment){
         if(fragment!=null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.Fragment_container, fragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.Fragment_container, fragment).addToBackStack("home_fragment").commit();
             return true;
         }
         return false;
@@ -43,6 +43,7 @@ public class Main3Activity extends AppCompatActivity implements BottomNavigation
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         Fragment fragment = null;
+
 
         switch (menuItem.getItemId()){
             case R.id.navigation_home:

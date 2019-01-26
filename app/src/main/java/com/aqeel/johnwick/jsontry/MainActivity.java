@@ -82,4 +82,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(new WallpaperAdapter(wList,this));
         recyclerView.setLayoutManager(new GridLayoutManager(this,3));
     }
+
+
+
 }
