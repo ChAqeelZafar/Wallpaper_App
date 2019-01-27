@@ -1,19 +1,17 @@
 package com.aqeel.johnwick.jsontry;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
+import android.view.MenuItem;
 
 import com.aqeel.johnwick.jsontry.fragments.AboutFragment;
 import com.aqeel.johnwick.jsontry.fragments.HomeFragment;
+import com.aqeel.johnwick.jsontry.fragments.LikesFragment;
 import com.aqeel.johnwick.jsontry.fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
-import android.view.MenuItem;
-import android.widget.TextView;
 
 public class Main3Activity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -56,6 +54,9 @@ public class Main3Activity extends AppCompatActivity implements BottomNavigation
 
             case R.id.navigation_about:
                 fragment = new AboutFragment();
+                break;
+            case R.id.navigation_likes:
+                fragment = new LikesFragment();
                 break;
         }
 

@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/E:/Installed/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_arrow_downward_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/E:/Installed/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_favorite_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,8 +28,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="7cfc00" />
-                            <entry key="outputName" value="ic_arrow_downward_black_24dp" />
+                            <entry key="outputName" value="ic_favorite_black_24dp" />
                             <entry key="sourceFile" value="C:\Users\johnWick" />
                           </map>
                         </option>

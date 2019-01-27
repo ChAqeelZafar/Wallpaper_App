@@ -9,13 +9,11 @@ import android.widget.ImageView;
 
 import com.aqeel.johnwick.jsontry.R;
 import com.aqeel.johnwick.jsontry.fragments.FullImageFragment;
-import com.aqeel.johnwick.jsontry.fragments.HomeFragment;
 import com.aqeel.johnwick.jsontry.models.Wallpaper;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -54,6 +52,8 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Hold
                 Bundle args = new Bundle();
                 args.putString("fullImgLink", wallpaper.getHighUrl());
                 fullImageFragment.setArguments(args);
+//                Intent intent = new Intent(ctx, Main2Activity.class);
+//                ctx.startActivity(intent);
                 loadFragment(fullImageFragment);
             }
         });

@@ -13,8 +13,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.aqeel.johnwick.jsontry.Main3Activity;
-import com.aqeel.johnwick.jsontry.MainActivity;
 import com.aqeel.johnwick.jsontry.R;
 import com.aqeel.johnwick.jsontry.adapters.WallpaperAdapter;
 import com.aqeel.johnwick.jsontry.models.Wallpaper;
@@ -24,12 +22,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,7 +52,7 @@ public class HomeFragment extends Fragment {
         View v = inflater.inflate(R.layout.home_fragment, container, false);
 
 
-        url ="https://pixabay.com/api/?key=11352394-967dbfe8727b610ee5d635714&orientation=vertical&editors_choice=true&image_type=photo&pretty=true&order=latest&per_page=10";
+        url ="https://pixabay.com/api/?key=11352394-967dbfe8727b610ee5d635714&orientation=vertical&pretty=true&per_page=10";
 
         Bundle bundle = getArguments();
         if(bundle!=null) {
@@ -77,10 +75,11 @@ public class HomeFragment extends Fragment {
                     JSONArray jsonArray = response.getJSONArray("hits");
                     for(int i=0; i <jsonArray.length(); i++){
                         String nUrl = jsonArray.getJSONObject(i).getString("previewURL");
-                        String hUrl = jsonArray.getJSONObject(i).getString("largeImageURL");
+                        String hUrl = jsonArray.getJSONObject(i).getString("fullHDURL");
 
                         Wallpaper w = new Wallpaper(nUrl, hUrl);
                         wList.add(w);
+                        Collections.shuffle(wList);
                         //Toast.makeText(getContext(), "inner", Toast.LENGTH_LONG).show();
                         loadrecycler();
 
