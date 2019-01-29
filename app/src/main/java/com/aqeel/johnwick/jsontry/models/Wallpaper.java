@@ -1,11 +1,25 @@
 package com.aqeel.johnwick.jsontry.models;
 
 public class Wallpaper {
-    String url, highUrl;
+    String url, highUrl, largeImageURL;
 
-    public Wallpaper(String url, String highUrl) {
+    public Wallpaper(String url, String highUrl, String largeImageURL) {
         this.url = url;
         this.highUrl = highUrl;
+        this.largeImageURL = largeImageURL;
+    }
+//
+//    public Wallpaper(String url, String highUrl) {
+//        this.url = url;
+//        this.highUrl = highUrl;
+//    }
+
+    public String getLargeImageURL() {
+        return largeImageURL;
+    }
+
+    public void setLargeImageURL(String largeImageURL) {
+        this.largeImageURL = largeImageURL;
     }
 
     public String getUrl() {

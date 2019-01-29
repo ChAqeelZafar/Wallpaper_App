@@ -50,7 +50,11 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Hold
             public void onClick(View v) {
                 FullImageFragment fullImageFragment = new FullImageFragment ();
                 Bundle args = new Bundle();
-                args.putString("fullImgLink", wallpaper.getHighUrl());
+                args.putString("largeImageURL", wallpaper.getLargeImageURL());
+                args.putString("previewImageURL", wallpaper.getUrl());
+                args.putString("fullHdUrl", wallpaper.getHighUrl());
+
+
                 fullImageFragment.setArguments(args);
 //                Intent intent = new Intent(ctx, Main2Activity.class);
 //                ctx.startActivity(intent);

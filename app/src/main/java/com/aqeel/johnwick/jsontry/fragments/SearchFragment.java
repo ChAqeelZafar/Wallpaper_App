@@ -4,12 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.aqeel.johnwick.jsontry.R;
 import com.aqeel.johnwick.jsontry.adapters.CatAdapter;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,13 +23,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SearchFragment extends Fragment {
 
-    SearchView searchView;
+
     RecyclerView recyclerView;
     List<String> cList = new ArrayList<>();
     TextView textCat;
     FirebaseFirestore firestore;
 
-
+    MaterialSearchView searchView;
     //String urlFix = "https://pixabay.com/api/?key=11352394-967dbfe8727b610ee5d635714&image_type=photo&orientation=vertical&editors_choice=true&order=popular&pretty=true&per_page=3&category=";
 
     //List<Wallpaper> wList = new ArrayList<>();
@@ -40,6 +40,11 @@ public class SearchFragment extends Fragment {
         //return super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.search_fragment, container, false);
 
+
+
+
+
+
         final String[] st =         {"fashion", "nature", "backgrounds", "science", "education", "people", "feelings", "religion", "health", "places", "animals", "industry", "food", "computer", "sports", "transportation", "travel", "buildings", "business", "music"};
 
 
@@ -47,8 +52,7 @@ public class SearchFragment extends Fragment {
 
         cList = Arrays.asList(st);
 
-        searchView = v.findViewById(R.id.search_searchview);
-        searchView.setSubmitButtonEnabled(false);
+
 
 
 
@@ -190,6 +194,8 @@ public class SearchFragment extends Fragment {
 //        recyclerView.setAdapter(new CatAdapter(wList,getContext()));
 //        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
 //    }
+
+
 
 
 

@@ -7,11 +7,9 @@
     android:id="@+id/viewholder_cat_cardview"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="3dp"
 
     app:cardCornerRadius="4dp"
     app:cardElevation="2dp"
-    app:contentPadding="5dp"
     tools:layout_editor_absoluteX="8dp"
     tools:layout_editor_absoluteY="167dp">
 
@@ -35,11 +33,11 @@
             android:layout_width="0dp"
             android:layout_height="26dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginBottom="3dp"
             android:gravity="center_horizontal"
             android:text="TextView"
             android:textColor="@color/primary_text"
-            android:textSize="24sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/viewholder_cat_img"
             app:layout_constraintStart_toStartOf="@+id/viewholder_cat_img"

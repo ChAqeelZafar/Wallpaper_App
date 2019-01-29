@@ -1,6 +1,7 @@
 package com.aqeel.johnwick.jsontry;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.aqeel.johnwick.jsontry.fragments.AboutFragment;
@@ -23,6 +24,10 @@ public class Main3Activity extends AppCompatActivity implements BottomNavigation
         setContentView(R.layout.activity_main3);
 
 
+
+
+
+
         BottomNavigationView navigation =  findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
 
@@ -31,7 +36,10 @@ public class Main3Activity extends AppCompatActivity implements BottomNavigation
 
     private boolean loadFragment(Fragment fragment){
         if(fragment!=null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.Fragment_container, fragment).addToBackStack("home_fragment").commit();
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.Fragment_container, fragment).commit();
+            //getSupportFragmentManager().beginTransaction().replace(R.id.Fragment_container, fragment).addToBackStack("home_fragment").commit();
+
             return true;
         }
         return false;
@@ -62,4 +70,15 @@ public class Main3Activity extends AppCompatActivity implements BottomNavigation
 
         return loadFragment(fragment);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.actionbarmenu, menu);
+        MenuItem item = menu.findItem(R.id.menu_main);
+        item.setVisible(false);
+        return true;
+    }
+
+
 }

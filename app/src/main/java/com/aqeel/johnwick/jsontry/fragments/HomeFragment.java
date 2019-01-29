@@ -76,8 +76,8 @@ public class HomeFragment extends Fragment {
                     for(int i=0; i <jsonArray.length(); i++){
                         String nUrl = jsonArray.getJSONObject(i).getString("previewURL");
                         String hUrl = jsonArray.getJSONObject(i).getString("fullHDURL");
-
-                        Wallpaper w = new Wallpaper(nUrl, hUrl);
+                        String lUrl = jsonArray.getJSONObject(i).getString("largeImageURL");
+                        Wallpaper w = new Wallpaper(nUrl, hUrl, lUrl);
                         wList.add(w);
                         Collections.shuffle(wList);
                         //Toast.makeText(getContext(), "inner", Toast.LENGTH_LONG).show();
