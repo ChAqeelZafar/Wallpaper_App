@@ -8,6 +8,7 @@ import com.aqeel.johnwick.jsontry.fragments.AboutFragment;
 import com.aqeel.johnwick.jsontry.fragments.HomeFragment;
 import com.aqeel.johnwick.jsontry.fragments.LikesFragment;
 import com.aqeel.johnwick.jsontry.fragments.SearchFragment;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -24,7 +25,7 @@ public class Main3Activity extends AppCompatActivity implements BottomNavigation
         setContentView(R.layout.activity_main3);
 
 
-
+        MobileAds.initialize(this, getString(R.string.admobId));
 
 
 

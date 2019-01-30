@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.home_fragment, container, false);
 
-
+        wList.clear();
         url ="https://pixabay.com/api/?key=11352394-967dbfe8727b610ee5d635714&orientation=vertical&pretty=true&per_page=10";
 
         Bundle bundle = getArguments();
@@ -77,7 +77,7 @@ public class HomeFragment extends Fragment {
                         String nUrl = jsonArray.getJSONObject(i).getString("previewURL");
                         String hUrl = jsonArray.getJSONObject(i).getString("fullHDURL");
                         String lUrl = jsonArray.getJSONObject(i).getString("largeImageURL");
-                        Wallpaper w = new Wallpaper(nUrl, hUrl, lUrl);
+                        Wallpaper w = new Wallpaper(nUrl, hUrl, lUrl, false);
                         wList.add(w);
                         Collections.shuffle(wList);
                         //Toast.makeText(getContext(), "inner", Toast.LENGTH_LONG).show();

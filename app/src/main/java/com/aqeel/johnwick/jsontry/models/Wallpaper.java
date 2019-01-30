@@ -1,18 +1,48 @@
 package com.aqeel.johnwick.jsontry.models;
 
-public class Wallpaper {
-    String url, highUrl, largeImageURL;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-    public Wallpaper(String url, String highUrl, String largeImageURL) {
+@Entity
+public class Wallpaper {
+
+
+
+    @PrimaryKey(autoGenerate = true)
+    public int id;
+
+    @ColumnInfo(name = "isFav")
+    Boolean isFav;
+
+    @ColumnInfo(name = "url")
+    String url;
+
+    @ColumnInfo(name = "highUrl")
+    String highUrl;
+
+    @ColumnInfo(name = "largeImageUrl")
+    String largeImageURL;
+
+    public Wallpaper(String url, String highUrl, String largeImageURL, Boolean isFav) {
         this.url = url;
         this.highUrl = highUrl;
         this.largeImageURL = largeImageURL;
+        this.isFav = isFav;
     }
 //
 //    public Wallpaper(String url, String highUrl) {
 //        this.url = url;
 //        this.highUrl = highUrl;
 //    }
+
+    public Boolean getFav() {
+        return isFav;
+    }
+
+    public void setFav(Boolean fav) {
+        isFav = fav;
+    }
 
     public String getLargeImageURL() {
         return largeImageURL;
@@ -38,3 +68,4 @@ public class Wallpaper {
         this.highUrl = highUrl;
     }
 }
+

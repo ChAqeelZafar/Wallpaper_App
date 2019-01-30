@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.aqeel.johnwick.jsontry.R;
 import com.aqeel.johnwick.jsontry.adapters.CatAdapter;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class SearchFragment extends Fragment {
     RecyclerView recyclerView;
     List<String> cList = new ArrayList<>();
     TextView textCat;
-    FirebaseFirestore firestore;
+
 
     MaterialSearchView searchView;
     //String urlFix = "https://pixabay.com/api/?key=11352394-967dbfe8727b610ee5d635714&image_type=photo&orientation=vertical&editors_choice=true&order=popular&pretty=true&per_page=3&category=";

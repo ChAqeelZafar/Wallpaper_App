@@ -5,6 +5,8 @@
     <string name="title_dashboard">Search</string>
     <string name="title_notifications">About</string>
 
+    <string name="admobId">ca-app-pub-3940256099942544~3347511713</string>
+
     <string-array name="query_suggestions">
         <item>Android</item>
         <item>iOS</item>

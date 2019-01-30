@@ -53,6 +53,7 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Hold
                 args.putString("largeImageURL", wallpaper.getLargeImageURL());
                 args.putString("previewImageURL", wallpaper.getUrl());
                 args.putString("fullHdUrl", wallpaper.getHighUrl());
+                args.putBoolean("isFav", wallpaper.getFav());
 
 
                 fullImageFragment.setArguments(args);
