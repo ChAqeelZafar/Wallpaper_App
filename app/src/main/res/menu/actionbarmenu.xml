@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_main"
+        android:icon="@drawable/ic_menu_black_24dp"
+        android:title=""
+        android:visible="true"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/actionmenu_setAs"
+                android:title="set image as Wallpaper"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/actionmenu_high"
+                android:title="View Ad for HD 1920 Resolution"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/actionmenu_detail"
+                android:title="Detail"
+                app:showAsAction="never" />
+        </menu>
+    </item>
+</menu>
