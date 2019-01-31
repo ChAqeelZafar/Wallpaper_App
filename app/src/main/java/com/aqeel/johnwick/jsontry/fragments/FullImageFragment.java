@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aqeel.johnwick.jsontry.R;
@@ -47,10 +48,10 @@ import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
 public class FullImageFragment extends Fragment {
-    String urlLargeImg, urlPreviewImg, urlFullHd, urlToLoad ;
+    String urlLargeImg, urlPreviewImg, urlFullHd, urlToLoad, imgDetails, urlWebImg ;
     ImageView imageView1 ;
     ImageButton downloadImgBtn, favImgBtn;
-
+    TextView imgDetailText;
 
     Boolean isFav = false, isDownloaded = false, isFullHd=false, isBlurred=false;
 
@@ -74,7 +75,7 @@ public class FullImageFragment extends Fragment {
         rewardedAdSetup();
         loadRewardedVideoAd();
 
-
+        imgDetailText = v.findViewById(R.id.fullimage_text_details);
 
 
         ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},requestCode);
@@ -122,12 +123,16 @@ public class FullImageFragment extends Fragment {
         if(bundle!=null) {
             urlLargeImg = getArguments().getString("largeImageURL");
             urlPreviewImg = getArguments().getString("previewImageURL");
+            urlWebImg = getArguments().getString("webformatURL");
             urlFullHd = getArguments().getString("fullHdUrl");
             isFav = getArguments().getBoolean("isFav");
+            imgDetails = getArguments().getString("imgDetails");
 
 
         }
         Toast.makeText(getContext(), urlLargeImg, Toast.LENGTH_SHORT).show();
+
+        imgDetailText.setText(imgDetails);
 
         if(!isFav){
             favImgBtn.setBackgroundResource(R.drawable.ic_favorite_border_black_24dp);
@@ -343,7 +348,7 @@ public class FullImageFragment extends Fragment {
                         isBlurred = true;
                         makeBlur();
                     }
-                        showDetails();
+                        showDetails(true);
 
 
 
@@ -353,8 +358,12 @@ public class FullImageFragment extends Fragment {
         }
     }
 
-    private void showDetails() {
-        
+    private void showDetails(boolean isShow) {
+        if(isShow){
+            imgDetailText.setVisibility(View.VISIBLE);
+            favImgBtn.setVisibility(View.GONE);
+            downloadImgBtn.setVisibility(View.GONE);
+        }
     }
 
     void makeBlur(){
@@ -430,7 +439,7 @@ public class FullImageFragment extends Fragment {
     }
 
     void favImgBtnClicked(){
-        Wallpaper wallpaperTemp = new Wallpaper(urlPreviewImg, urlFullHd, urlLargeImg, true);
+        Wallpaper wallpaperTemp = new Wallpaper(urlPreviewImg,  urlWebImg,urlLargeImg, urlFullHd, true, imgDetails);
 
         if(isFav){
             isFav = false;

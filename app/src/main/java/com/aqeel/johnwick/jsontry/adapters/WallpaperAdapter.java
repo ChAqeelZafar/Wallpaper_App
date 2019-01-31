@@ -50,10 +50,12 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Hold
             public void onClick(View v) {
                 FullImageFragment fullImageFragment = new FullImageFragment ();
                 Bundle args = new Bundle();
-                args.putString("largeImageURL", wallpaper.getLargeImageURL());
                 args.putString("previewImageURL", wallpaper.getUrl());
+                args.putString("webformatURL", wallpaper.getWebformatURL());
+                args.putString("largeImageURL", wallpaper.getLargeImageURL());
                 args.putString("fullHdUrl", wallpaper.getHighUrl());
                 args.putBoolean("isFav", wallpaper.getFav());
+                args.putString("imgDetails", wallpaper.getImgDetails());
 
 
                 fullImageFragment.setArguments(args);

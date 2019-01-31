@@ -74,10 +74,38 @@ public class HomeFragment extends Fragment {
                 try {
                     JSONArray jsonArray = response.getJSONArray("hits");
                     for(int i=0; i <jsonArray.length(); i++){
-                        String nUrl = jsonArray.getJSONObject(i).getString("previewURL");
+                        String pUrl = jsonArray.getJSONObject(i).getString("previewURL");
+                        String wUrl = jsonArray.getJSONObject(i).getString("webformatURL");
                         String hUrl = jsonArray.getJSONObject(i).getString("fullHDURL");
                         String lUrl = jsonArray.getJSONObject(i).getString("largeImageURL");
-                        Wallpaper w = new Wallpaper(nUrl, hUrl, lUrl, false);
+
+                        int views  = jsonArray.getJSONObject(i).getInt("views");
+                        int downloads  = jsonArray.getJSONObject(i).getInt("downloads");
+                        int favorites = jsonArray.getJSONObject(i).getInt("favorites");
+                        int likes = jsonArray.getJSONObject(i).getInt("likes");
+                        int comments = jsonArray.getJSONObject(i).getInt("comments");
+                        int imageHeight = jsonArray.getJSONObject(i).getInt("imageHeight");
+                        int imageWidth = jsonArray.getJSONObject(i).getInt("imageWidth");
+                        int imageSize = jsonArray.getJSONObject(i).getInt("imageSize");
+
+                        String user = jsonArray.getJSONObject(i).getString("user");
+                        String tags = jsonArray.getJSONObject(i).getString("tags");
+
+                        String imgDetails =
+                                "\nUser : " + user +
+                                        "\nTags : " + tags +
+                                "\nTotal Downloads : " + downloads +
+                                "\nTotal Views : " + views +
+                                "\nFavorities : " + favorites +
+                                "\nTotal Likes : " + likes +
+                                "\nComments : " + comments +
+                                "\nImage height : " + imageHeight+
+                                "\nImage width : " + imageWidth +
+                                "\nImage Size : " + imageSize/1048576 + " Mb";
+                       Wallpaper w = new Wallpaper(pUrl,wUrl,lUrl,hUrl,false, imgDetails);
+
+
+                        //Wallpaper w = new Wallpaper(nUrl, hUrl, lUrl, false);
                         wList.add(w);
                         Collections.shuffle(wList);
                         //Toast.makeText(getContext(), "inner", Toast.LENGTH_LONG).show();
