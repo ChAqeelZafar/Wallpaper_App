@@ -1,6 +1,7 @@
 package com.aqeel.johnwick.jsontry.fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,11 +48,11 @@ import androidx.room.Room;
 
 public class FullImageFragment extends Fragment {
     String urlLargeImg, urlPreviewImg, urlFullHd, urlToLoad ;
-    ImageView imageView1;
+    ImageView imageView1 ;
     ImageButton downloadImgBtn, favImgBtn;
 
 
-    Boolean isFav = false, isDownloaded = false, isFullHd=false;
+    Boolean isFav = false, isDownloaded = false, isFullHd=false, isBlurred=false;
 
     AppDatabase db;
 
@@ -333,10 +338,83 @@ public class FullImageFragment extends Fragment {
                 }
                 //Toast.makeText(getContext(), "high res clicked", Toast.LENGTH_SHORT).show();
                 return true;
+            case R.id.actionmenu_detail:
+                    if(!isBlurred) {
+                        isBlurred = true;
+                        makeBlur();
+                    }
+                        showDetails();
+
+
+
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private void showDetails() {
+        
+    }
+
+    void makeBlur(){
+        int radiusArr[] = new int[]{25, 23, 21, 19, 17};
+        BitmapDrawable drawable = (BitmapDrawable) imageView1.getDrawable();
+        Bitmap bitmap = drawable.getBitmap();
+
+        Bitmap blurred = blurRenderScript(bitmap, radiusArr[4]);//second parametre is radius
+        imageView1.setImageBitmap(blurred);
+    }
+    @SuppressLint("NewApi")
+    private Bitmap blurRenderScript(Bitmap smallBitmap, int radius) {
+
+        try {
+            smallBitmap = RGB565toARGB888(smallBitmap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        Bitmap bitmap = Bitmap.createBitmap(
+                smallBitmap.getWidth(), smallBitmap.getHeight(),
+                Bitmap.Config.ARGB_8888);
+
+        RenderScript renderScript = RenderScript.create(getContext());
+
+        Allocation blurInput = Allocation.createFromBitmap(renderScript, smallBitmap);
+        Allocation blurOutput = Allocation.createFromBitmap(renderScript, bitmap);
+
+        ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(renderScript,
+                Element.U8_4(renderScript));
+        blur.setInput(blurInput);
+        blur.setRadius(radius); // radius must be 0 < r <= 25
+        blur.forEach(blurOutput);
+
+        blurOutput.copyTo(bitmap);
+        renderScript.destroy();
+
+        return bitmap;
+
+    }
+
+    private Bitmap RGB565toARGB888(Bitmap img) throws Exception {
+        int numPixels = img.getWidth() * img.getHeight();
+        int[] pixels = new int[numPixels];
+
+        //Get JPEG pixels.  Each int is the color values for one pixel.
+        img.getPixels(pixels, 0, img.getWidth(), 0, 0, img.getWidth(), img.getHeight());
+
+        //Create a Bitmap of the appropriate format.
+        Bitmap result = Bitmap.createBitmap(img.getWidth(), img.getHeight(), Bitmap.Config.ARGB_8888);
+
+        //Set RGB pixels.
+        result.setPixels(pixels, 0, result.getWidth(), 0, 0, result.getWidth(), result.getHeight());
+        return result;
+    }
+
+
+
+
 
     void setAsWallpaper(){
 
