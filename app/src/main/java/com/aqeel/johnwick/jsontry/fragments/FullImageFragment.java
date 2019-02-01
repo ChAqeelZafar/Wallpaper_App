@@ -1,7 +1,6 @@
 package com.aqeel.johnwick.jsontry.fragments;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
@@ -11,10 +10,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.renderscript.Allocation;
-import android.renderscript.Element;
-import android.renderscript.RenderScript;
-import android.renderscript.ScriptIntrinsicBlur;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aqeel.johnwick.jsontry.R;
@@ -43,6 +37,7 @@ import java.io.IOException;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
@@ -51,7 +46,7 @@ public class FullImageFragment extends Fragment {
     String urlLargeImg, urlPreviewImg, urlFullHd, urlToLoad, imgDetails, urlWebImg ;
     ImageView imageView1 ;
     ImageButton downloadImgBtn, favImgBtn;
-    TextView imgDetailText;
+
 
     Boolean isFav = false, isDownloaded = false, isFullHd=false, isBlurred=false;
 
@@ -75,7 +70,7 @@ public class FullImageFragment extends Fragment {
         rewardedAdSetup();
         loadRewardedVideoAd();
 
-        imgDetailText = v.findViewById(R.id.fullimage_text_details);
+
 
 
         ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},requestCode);
@@ -132,7 +127,7 @@ public class FullImageFragment extends Fragment {
         }
         Toast.makeText(getContext(), urlLargeImg, Toast.LENGTH_SHORT).show();
 
-        imgDetailText.setText(imgDetails);
+
 
         if(!isFav){
             favImgBtn.setBackgroundResource(R.drawable.ic_favorite_border_black_24dp);
@@ -150,7 +145,7 @@ public class FullImageFragment extends Fragment {
 
     private void loadGlide() {
         if(!urlLargeImg.equals("") && !isFullHd){
-            Glide.with(getContext()).load(urlPreviewImg).into(imageView1);
+            Glide.with(getContext()).load(urlLargeImg).into(imageView1);
         }
         else       if(!urlFullHd.equals("") && isFullHd){
             Glide.with(getContext()).load(urlFullHd).into(imageView1);
@@ -344,11 +339,15 @@ public class FullImageFragment extends Fragment {
                 //Toast.makeText(getContext(), "high res clicked", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.actionmenu_detail:
-                    if(!isBlurred) {
-                        isBlurred = true;
-                        makeBlur();
-                    }
-                        showDetails(true);
+                DetailsFragment detailsFragment= new DetailsFragment ();
+                Bundle args = new Bundle();
+                args.putString("imgDetails", imgDetails);
+                args.putString("urlImgBlur", urlWebImg);
+
+
+
+                detailsFragment.setArguments(args);
+                    loadFragment(detailsFragment);
 
 
 
@@ -358,68 +357,7 @@ public class FullImageFragment extends Fragment {
         }
     }
 
-    private void showDetails(boolean isShow) {
-        if(isShow){
-            imgDetailText.setVisibility(View.VISIBLE);
-            favImgBtn.setVisibility(View.GONE);
-            downloadImgBtn.setVisibility(View.GONE);
-        }
-    }
 
-    void makeBlur(){
-        int radiusArr[] = new int[]{25, 23, 21, 19, 17};
-        BitmapDrawable drawable = (BitmapDrawable) imageView1.getDrawable();
-        Bitmap bitmap = drawable.getBitmap();
-
-        Bitmap blurred = blurRenderScript(bitmap, radiusArr[4]);//second parametre is radius
-        imageView1.setImageBitmap(blurred);
-    }
-    @SuppressLint("NewApi")
-    private Bitmap blurRenderScript(Bitmap smallBitmap, int radius) {
-
-        try {
-            smallBitmap = RGB565toARGB888(smallBitmap);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        Bitmap bitmap = Bitmap.createBitmap(
-                smallBitmap.getWidth(), smallBitmap.getHeight(),
-                Bitmap.Config.ARGB_8888);
-
-        RenderScript renderScript = RenderScript.create(getContext());
-
-        Allocation blurInput = Allocation.createFromBitmap(renderScript, smallBitmap);
-        Allocation blurOutput = Allocation.createFromBitmap(renderScript, bitmap);
-
-        ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(renderScript,
-                Element.U8_4(renderScript));
-        blur.setInput(blurInput);
-        blur.setRadius(radius); // radius must be 0 < r <= 25
-        blur.forEach(blurOutput);
-
-        blurOutput.copyTo(bitmap);
-        renderScript.destroy();
-
-        return bitmap;
-
-    }
-
-    private Bitmap RGB565toARGB888(Bitmap img) throws Exception {
-        int numPixels = img.getWidth() * img.getHeight();
-        int[] pixels = new int[numPixels];
-
-        //Get JPEG pixels.  Each int is the color values for one pixel.
-        img.getPixels(pixels, 0, img.getWidth(), 0, 0, img.getWidth(), img.getHeight());
-
-        //Create a Bitmap of the appropriate format.
-        Bitmap result = Bitmap.createBitmap(img.getWidth(), img.getHeight(), Bitmap.Config.ARGB_8888);
-
-        //Set RGB pixels.
-        result.setPixels(pixels, 0, result.getWidth(), 0, 0, result.getWidth(), result.getHeight());
-        return result;
-    }
 
 
 
@@ -493,4 +431,15 @@ public class FullImageFragment extends Fragment {
 //                    }
 //                });
 //    }
+
+
+    private boolean loadFragment(Fragment fragment){
+        if(fragment!=null){
+            ((AppCompatActivity)getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.Fragment_container, fragment).addToBackStack("full_image_fragment").commit();
+            return true;
+        }
+        return false;
+    }
+
+
 }

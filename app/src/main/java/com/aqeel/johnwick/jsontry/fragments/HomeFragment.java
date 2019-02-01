@@ -115,7 +115,7 @@ public class HomeFragment extends Fragment {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    //Toast.makeText(MainActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
 
 
                 }
@@ -124,7 +124,7 @@ public class HomeFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(),"NOT", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),"Api did not work", Toast.LENGTH_SHORT).show();
 
             }
         });

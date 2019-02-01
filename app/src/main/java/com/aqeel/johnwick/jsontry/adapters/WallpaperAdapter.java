@@ -40,7 +40,7 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Hold
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         final Wallpaper wallpaper = wList.get(position);
-        String url = wallpaper.getUrl();
+        String url = wallpaper.getWebformatURL();
         if(!url.equals("")){
             Glide.with(this.ctx).load(url).into(holder.imageView);
         }

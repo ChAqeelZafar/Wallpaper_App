@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-public class Main3Activity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class Main3Activity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener  {
 
 
 
