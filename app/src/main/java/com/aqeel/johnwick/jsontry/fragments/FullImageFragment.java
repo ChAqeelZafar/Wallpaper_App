@@ -30,6 +30,7 @@ import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -340,9 +341,17 @@ public class FullImageFragment extends Fragment {
                 return true;
             case R.id.actionmenu_detail:
                 DetailsFragment detailsFragment= new DetailsFragment ();
+
+                BitmapDrawable drawable = (BitmapDrawable) imageView1.getDrawable();
+                Bitmap bitmap = drawable.getBitmap();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
                 Bundle args = new Bundle();
                 args.putString("imgDetails", imgDetails);
                 args.putString("urlImgBlur", urlWebImg);
+                args.putByteArray("bitmapArr", byteArray);
+
 
 
 
