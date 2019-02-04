@@ -1,49 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/viewholder_cat_cardview"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_margin="1dp"
+    android:layout_weight="0.5"
+    android:background="#ff0000">
 
-    app:cardCornerRadius="4dp"
-    app:cardElevation="2dp"
-    tools:layout_editor_absoluteX="8dp"
-    tools:layout_editor_absoluteY="167dp">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/viewholder_cat_cardview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/viewholder_cat_img"
-            android:layout_width="192dp"
-            android:layout_height="172dp"
-            android:scaleType="fitXY"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/ic_launcher" />
+        app:cardCornerRadius="1dp"
+        app:cardElevation="2dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="167dp">
 
-        <TextView
-            android:id="@+id/viewholder_cat_name"
-            android:layout_width="0dp"
-            android:layout_height="26dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="3dp"
-            android:gravity="center_horizontal"
-            android:text="TextView"
-            android:textColor="@color/primary_text"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/viewholder_cat_img"
-            app:layout_constraintStart_toStartOf="@+id/viewholder_cat_img"
-            app:layout_constraintTop_toBottomOf="@+id/viewholder_cat_img" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/viewholder_cat_img"
+                android:layout_width="192dp"
+                android:layout_height="172dp"
+                android:scaleType="fitXY"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/viewholder_cat_name"
+                android:layout_width="0dp"
+                android:layout_height="26dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="3dp"
+                android:gravity="center_horizontal"
+                android:text="TextView"
+                android:textColor="@color/primary_text"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/viewholder_cat_img"
+                app:layout_constraintStart_toStartOf="@+id/viewholder_cat_img"
+                app:layout_constraintTop_toBottomOf="@+id/viewholder_cat_img" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
 
 
 

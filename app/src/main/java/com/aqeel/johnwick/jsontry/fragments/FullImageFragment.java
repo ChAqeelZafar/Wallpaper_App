@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -18,12 +19,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.aqeel.johnwick.jsontry.R;
 import com.aqeel.johnwick.jsontry.extras.AppDatabase;
 import com.aqeel.johnwick.jsontry.models.Wallpaper;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardItem;
@@ -47,6 +53,7 @@ public class FullImageFragment extends Fragment {
     String urlLargeImg, urlPreviewImg, urlFullHd, urlToLoad, imgDetails, urlWebImg ;
     ImageView imageView1 ;
     ImageButton downloadImgBtn, favImgBtn;
+    ProgressBar progressBar;
 
 
     Boolean isFav = false, isDownloaded = false, isFullHd=false, isBlurred=false;
@@ -73,11 +80,7 @@ public class FullImageFragment extends Fragment {
 
 
 
-
-        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},requestCode);
-
-
-        onRequestPermissionsResult(requestCode,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},grantResults);
+        progressBar = v.findViewById(R.id.fullimage_progressbar);
 
 
         db = Room.databaseBuilder(getContext(),
@@ -102,6 +105,8 @@ public class FullImageFragment extends Fragment {
         downloadImgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},requestCode);
+                onRequestPermissionsResult(requestCode,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},grantResults);
                 if(!isDownloaded) {
                     downloadImgBtn.setBackgroundResource(R.drawable.tickwall);
                     downloadImg();
@@ -137,6 +142,7 @@ public class FullImageFragment extends Fragment {
             favImgBtn.setBackgroundResource(R.drawable.ic_favorite_black_24dp);
 
         }
+        showProgress(true);
 
      loadGlide();
 
@@ -144,9 +150,34 @@ public class FullImageFragment extends Fragment {
 
     }
 
+    void showProgress(boolean isShow){
+        if(isShow){
+            progressBar.setVisibility(View.VISIBLE);
+            downloadImgBtn.setVisibility(View.GONE);
+            favImgBtn.setVisibility(View.GONE);
+        }
+        else{
+            progressBar.setVisibility(View.GONE);
+            downloadImgBtn.setVisibility(View.VISIBLE);
+            favImgBtn.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void loadGlide() {
         if(!urlLargeImg.equals("") && !isFullHd){
-            Glide.with(getContext()).load(urlLargeImg).into(imageView1);
+            Glide.with(getContext()).load(urlLargeImg).listener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    showProgress(false);
+                    return false;
+                }
+            }).into(imageView1);
         }
         else       if(!urlFullHd.equals("") && isFullHd){
             Glide.with(getContext()).load(urlFullHd).into(imageView1);
@@ -210,8 +241,7 @@ public class FullImageFragment extends Fragment {
             public void onRewarded(RewardItem rewardItem) {
                 Toast.makeText(getContext(),"Full Hd image is loading",Toast.LENGTH_LONG).show();
 
-                isFullHd = true;
-                loadGlide();
+
 
             }
 
@@ -224,6 +254,8 @@ public class FullImageFragment extends Fragment {
             @Override
             public void onRewardedVideoAdFailedToLoad(int i) {
                 Toast.makeText(getContext(),"onRewardedVideoAdFailedToLoad",Toast.LENGTH_LONG).show();
+                loadRewardedVideoAd();
+
 
             }
 
@@ -231,6 +263,8 @@ public class FullImageFragment extends Fragment {
             public void onRewardedVideoCompleted() {
                 Toast.makeText(getContext(),"onRewardedVideoCompleted()",Toast.LENGTH_LONG).show();
                 isFullHd = true;
+                loadGlide();
+
 
             }
         });
@@ -240,7 +274,7 @@ public class FullImageFragment extends Fragment {
     private void loadRewardedVideoAd() {
         Toast.makeText(getContext(),"LoadVideoAD", Toast.LENGTH_LONG).show();
         mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
-                new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build());
+                new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).addTestDevice("BF068A93BF898C6A42356FC93AB938BB").build());
     }
 
 
@@ -282,7 +316,21 @@ public class FullImageFragment extends Fragment {
 
         File storageLoc = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES); //context.getExternalFilesDir(null);
         String fileName = String.format("%d.jpg", System.currentTimeMillis());
-        File file = new File(storageLoc, fileName + ".jpg");
+
+
+        File folder = new File(Environment.getExternalStorageDirectory().toString()+"/Pictures/Tyle-Wallpapers");
+        folder.mkdirs();
+
+        //Save the path as a string value
+        String extStorageDirectory = folder.toString();
+
+        //Create New file and name it Image2.PNG
+        File file = new File(extStorageDirectory, fileName + ".jpg");
+
+
+
+
+
 
         try{
             FileOutputStream fos = new FileOutputStream(file);
@@ -334,6 +382,7 @@ public class FullImageFragment extends Fragment {
 
                 }
                 else{
+                    loadRewardedVideoAd();
                     Toast.makeText(getContext(),"Error LoadVideoAD", Toast.LENGTH_LONG).show();
 
                 }

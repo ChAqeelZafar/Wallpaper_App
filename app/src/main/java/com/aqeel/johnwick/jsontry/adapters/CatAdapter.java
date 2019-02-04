@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.aqeel.johnwick.jsontry.R;
 import com.aqeel.johnwick.jsontry.fragments.HomeFragment;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,8 @@ public class CatAdapter extends RecyclerView.Adapter<CatAdapter.Holder>{
        final String catName = cList.get(position);
 
        holder.textView.setText(catName.toUpperCase());
-       holder.imageView.setImageResource(getImageId(ctx, catName));
+      // holder.imageView.setImageResource(getImageId(ctx, catName));
+       Glide.with(ctx).load(getImageId(ctx, catName)).into(holder.imageView);
 
        holder.parentCard.setOnClickListener(new View.OnClickListener() {
            @Override

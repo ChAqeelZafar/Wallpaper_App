@@ -16,6 +16,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,6 +51,7 @@ public class SearchFragment extends Fragment {
 
 
         cList = Arrays.asList(st);
+
 
 
 
@@ -185,6 +187,7 @@ public class SearchFragment extends Fragment {
 
     }
 
+
     void loadRecycler(){
         recyclerView.setAdapter(new CatAdapter(cList,getContext()));
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
@@ -197,6 +200,12 @@ public class SearchFragment extends Fragment {
 
 
 
-
+    private boolean loadFragment(Fragment fragment){
+        if(fragment!=null){
+            ((AppCompatActivity)getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.Fragment_container, fragment).addToBackStack("search_fragment").commit();
+            return true;
+        }
+        return false;
+    }
 
 }

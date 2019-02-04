@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.aqeel.johnwick.jsontry.R;
 import com.aqeel.johnwick.jsontry.fragments.FullImageFragment;
@@ -17,7 +18,6 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.github.ybq.android.spinkit.style.ChasingDots;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Holder>{
     List<Wallpaper> wList = new ArrayList<>() ;
     Context ctx;
-    ChasingDots chasingDots = new ChasingDots();
+
 
     public WallpaperAdapter(List<Wallpaper> wList, Context ctx) {
         this.wList = wList;
@@ -51,11 +51,12 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Hold
         holder.progressBar.setVisibility(View.VISIBLE);
 
         final Wallpaper wallpaper = wList.get(position);
-        String url = wallpaper.getWebformatURL();
+        String url = wallpaper.getPreviewImgUrl();
         if(!url.equals("")){
             Glide.with(this.ctx).load(url).listener(new RequestListener<Drawable>() {
                 @Override
                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    Toast.makeText(ctx, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                     return false;
                 }
 
@@ -100,11 +101,20 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Hold
     class Holder extends RecyclerView.ViewHolder{
         ImageView imageView;
         ProgressBar progressBar;
+
+
+
+
+
+
+
         public Holder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.viewholder_img_img);
             progressBar = itemView.findViewById(R.id.viewholder_progressbar);
             progressBar.setVisibility(View.VISIBLE);
+
+
 
         }
     }
@@ -116,4 +126,5 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Hold
         }
         return false;
     }
+
 }

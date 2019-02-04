@@ -29,6 +29,21 @@
         app:layout_constraintStart_toStartOf="@id/fullimage_img_img"
         app:layout_constraintTop_toTopOf="@+id/fullimage_img_img">
 
+        <ProgressBar
+            android:id="@+id/fullimage_progressbar"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/white"
+            android:indeterminateTintMode="src_atop"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.439" />
+
         <ImageButton
             android:id="@+id/fullimage_btn_download"
             android:layout_width="53dp"

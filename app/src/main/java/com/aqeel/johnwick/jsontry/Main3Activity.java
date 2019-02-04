@@ -26,7 +26,7 @@ public class Main3Activity extends AppCompatActivity implements BottomNavigation
 
 
         MobileAds.initialize(this, getString(R.string.admobId));
-
+        //getActionBar().setTitle("Tyle-Wallpapers");
 
 
         BottomNavigationView navigation =  findViewById(R.id.navigation);
