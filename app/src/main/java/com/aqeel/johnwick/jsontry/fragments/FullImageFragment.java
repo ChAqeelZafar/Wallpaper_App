@@ -169,6 +169,7 @@ public class FullImageFragment extends Fragment {
                 @Override
                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                     Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    loadGlide();
                     return false;
                 }
 
@@ -363,6 +364,9 @@ public class FullImageFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.actionbarmenu, menu);
+        MenuItem item = menu.findItem(R.id.search);
+        item.setVisible(false);
+
     }
 
 

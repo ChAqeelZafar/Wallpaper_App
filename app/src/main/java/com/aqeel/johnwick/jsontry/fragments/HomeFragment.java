@@ -56,8 +56,13 @@ public class HomeFragment extends Fragment {
 
         Bundle bundle = getArguments();
         if(bundle!=null) {
-            String cat = getArguments().getString("category");
-            url = url + "&category="+ cat;
+            if(bundle.containsKey("searchKey")){
+                String cat = getArguments().getString("searchKey");
+                url = url + "&q=" + cat;
+            }else {
+                String cat = getArguments().getString("category");
+                url = url + "&category=" + cat;
+            }
 
         }
 
