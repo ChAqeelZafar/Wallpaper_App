@@ -16,18 +16,24 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
 public class Main3Activity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener  {
 
+    SearchView searchView ;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
+
+        ActionBar menu = getSupportActionBar();
+        menu.setDisplayShowHomeEnabled(true);
+        menu.setIcon(R.mipmap.ic_launcher);
 
 
 
@@ -59,6 +65,7 @@ public class Main3Activity extends AppCompatActivity implements BottomNavigation
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         Fragment fragment = null;
+        
 
 
         switch (menuItem.getItemId()){
@@ -95,7 +102,7 @@ public class Main3Activity extends AppCompatActivity implements BottomNavigation
         // Associate searchable configuration with the SearchView
         final SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        final SearchView searchView =
+        searchView =
                 (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
@@ -106,6 +113,7 @@ public class Main3Activity extends AppCompatActivity implements BottomNavigation
             @Override
             public boolean onQueryTextSubmit(String query) {
                 callSearch(query);
+                //searchView.setIconified(true);
                 searchView.clearFocus();
                 return true;
             }
@@ -136,7 +144,11 @@ public class Main3Activity extends AppCompatActivity implements BottomNavigation
         return true;
     }
 
-
+    @Override
+    public void onBackPressed() {
+        searchView.onActionViewCollapsed();
+        super.onBackPressed();
+    }
 
 
 

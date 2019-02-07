@@ -51,12 +51,14 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Hold
         holder.progressBar.setVisibility(View.VISIBLE);
 
         final Wallpaper wallpaper = wList.get(position);
-        String url = wallpaper.getPreviewImgUrl();
+        String url = wallpaper.getWebformatURL();
         if(!url.equals("")){
-            Glide.with(this.ctx).load(url).listener(new RequestListener<Drawable>() {
+            Glide.with(this.ctx).load(url).error(Glide.with(ctx).load(url)).listener(new RequestListener<Drawable>() {
                 @Override
                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                     Toast.makeText(ctx, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    //holder.progressBar.setVisibility(View.GONE);
+
                     return false;
                 }
 

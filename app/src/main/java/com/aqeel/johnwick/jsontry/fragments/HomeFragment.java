@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment {
         View v = inflater.inflate(R.layout.home_fragment, container, false);
 
         wList.clear();
-        url ="https://pixabay.com/api/?key=11352394-967dbfe8727b610ee5d635714&orientation=vertical&pretty=true&per_page=10";
+        url ="https://pixabay.com/api/?key=11352394-967dbfe8727b610ee5d635714&orientation=vertical&pretty=true&per_page=30";
 
         Bundle bundle = getArguments();
         if(bundle!=null) {

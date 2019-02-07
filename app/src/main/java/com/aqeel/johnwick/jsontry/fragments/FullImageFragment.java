@@ -165,11 +165,11 @@ public class FullImageFragment extends Fragment {
 
     private void loadGlide() {
         if(!urlLargeImg.equals("") && !isFullHd){
-            Glide.with(getContext()).load(urlLargeImg).listener(new RequestListener<Drawable>() {
+            Glide.with(getContext()).load(urlLargeImg).error(Glide.with(getContext()).load(urlLargeImg)).listener(new RequestListener<Drawable>() {
                 @Override
                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                     Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                    loadGlide();
+                    //loadGlide();
                     return false;
                 }
 
@@ -181,8 +181,21 @@ public class FullImageFragment extends Fragment {
             }).into(imageView1);
         }
         else       if(!urlFullHd.equals("") && isFullHd){
-            Glide.with(getContext()).load(urlFullHd).into(imageView1);
+            Glide.with(getContext()).load(urlFullHd).error(Glide.with(getContext()).load(urlFullHd)).listener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    showProgress(false);
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    showProgress(false);
+                    return false;
+                }
+            }).into(imageView1);
         }
+
     }
 
 
@@ -264,6 +277,7 @@ public class FullImageFragment extends Fragment {
             public void onRewardedVideoCompleted() {
                 Toast.makeText(getContext(),"onRewardedVideoCompleted()",Toast.LENGTH_LONG).show();
                 isFullHd = true;
+                showProgress(true);
                 loadGlide();
 
 
@@ -275,7 +289,7 @@ public class FullImageFragment extends Fragment {
     private void loadRewardedVideoAd() {
         Toast.makeText(getContext(),"LoadVideoAD", Toast.LENGTH_LONG).show();
         mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
-                new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).addTestDevice("BF068A93BF898C6A42356FC93AB938BB").build());
+                new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).addTestDevice("08348FC61FB35A9EC331AF3585211504").addTestDevice("BF068A93BF898C6A42356FC93AB938BB").build());
     }
 
 
